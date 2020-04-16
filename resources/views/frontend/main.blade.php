@@ -108,7 +108,7 @@
       </div>
     </nav>
 
-    {{--
+    
     @show
     <div class="container-fluid">      
       @yield('content')
@@ -117,7 +117,5 @@
         @include('frontend.footer')
       @show
     </div>
-
-    --}}
   </body>
 </html>
