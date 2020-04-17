@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class ApiEtudientController extends Controller
 {
 
-    public function check()
+    public function check(Request $request)
     {
         if( !$request->user()->etudient || !$request->user()->etudient->id )
             return response()->json([
