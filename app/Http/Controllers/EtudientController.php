@@ -124,7 +124,7 @@ class EtudientController extends Controller
             }
         }
 
-        return redirect()->route('etudient_edit', $user->id);
+        return redirect()->route('etudient_edit', $etudient->id);
     }
 
     /*

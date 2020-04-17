@@ -182,6 +182,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
 
 
+        // APIS Passpoert
+        Laravel\Passport\PassportServiceProvider::class,
 
     ],
 

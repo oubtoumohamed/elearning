@@ -40,21 +40,3 @@ include 'module.php';
 include 'question.php';
 include 'reponse.php';
 include 'cours.php';
-
-
-
-
-// ANDROID APP API 
-Route::group(['middleware' => 'web'], function () {
-    // Etudient
-    Route::group(['prefix' => '/api/etudient/'], function () {
-        Route::get('login', 'ApiController@EtudientLogin')->name('etudient_login');
-    });
-
-    
-    // Prof
-    Route::group(['prefix' => '/api/prof/'], function () {
-        Route::get('login', 'ApiController@ProfLogin')->name('prof_login');
-    });
-
-});
