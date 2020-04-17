@@ -37,13 +37,13 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['prefix' => 'etudient'], function () {
 
-    Route::post('signup', 'ApiEtudientController@signup');
+    //Route::post('signup', 'ApiEtudientController@signup');
     Route::post('login', 'ApiEtudientController@login');
   
     Route::group([
       'middleware' => 'auth:api'
     ], function() {
-        Route::get('logout', 'ApiEtudientController@logout');
         Route::get('details', 'ApiEtudientController@details');
+        Route::get('logout', 'ApiEtudientController@logout');
     });
 });
