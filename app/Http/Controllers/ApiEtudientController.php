@@ -61,7 +61,7 @@ class ApiEtudientController extends Controller
     {
         $this->check();
         return response()->json([
-            'etudient' => $request->user()->etudient;
+            'etudient' => $request->user()->etudient
         ]);
     }
   
