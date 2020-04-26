@@ -41,7 +41,7 @@ class ApiEtudientController extends Controller
             $user = $etudient ? $etudient->user : null;
         }
 
-        if(! \Auth::loginUsingId($user->id) )
+        if(!$user || ! \Auth::loginUsingId($user->id) )
             return response()->json(['message' => 'Unauthorized'], 401);
 
         $tokenResult = $user->createToken('Student Login');
@@ -49,20 +49,21 @@ class ApiEtudientController extends Controller
         $token = $tokenResult->token;
         $token->expires_at = Carbon::now()->addWeeks(4);
         $token->save();
-        return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse( $tokenResult->token->expires_at )->toDateTimeString(),
-            'etudient' => $etudient->Json(),
-        ]);
+
+        $return = $etudient->Json();
+        $return['access_token'] = $tokenResult->accessToken;
+        $return['token_type'] = 'Bearer';
+        $return['expires_at'] = Carbon::parse($tokenResult->token->expires_at)->toDateTimeString();
+
+        return response()->json($return);
     }
 
     public function details(Request $request)
     {
         $this->check($request);
-        return response()->json([
-            'etudient' => $request->user()->etudient->Json()
-        ]);
+        return response()->json(
+            $request->user()->etudient->Json()
+        );
     }
   
     /**
