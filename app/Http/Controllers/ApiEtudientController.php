@@ -65,6 +65,24 @@ class ApiEtudientController extends Controller
             $request->user()->etudient->Json()
         );
     }
+
+    public function modules(Request $request)
+    {
+        $this->check($request);
+
+        $user = $request->user();
+
+        $return = [
+            "filier" => $user->etudient->filier(),
+            "additional_modules" => $user->etudient->modules
+        ];
+
+        return response()->json(
+            $return
+        );
+    }
+
+
   
     /**
      * Logout user (Revoke the token)

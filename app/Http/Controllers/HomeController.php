@@ -24,8 +24,21 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $user = auth()->user();
+
+        $return = [
+            "cin" => $request->cin,
+            "filier" => $user->etudient->filier(),
+            "additional_modules" => $user->etudient->modules
+        ];
+
+        return response()->json(
+            $return
+        );
+
+
         return view('frontend.home');
     }
 

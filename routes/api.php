@@ -43,6 +43,7 @@ Route::group(['prefix' => 'etudient'], function () {
     Route::group([
       'middleware' => 'auth:api'
     ], function() {
+        Route::get('modules', 'ApiEtudientController@modules');
         Route::get('details', 'ApiEtudientController@details');
         Route::get('logout', 'ApiEtudientController@logout');
     });
