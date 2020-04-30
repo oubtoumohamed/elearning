@@ -67,7 +67,7 @@ class ApiEtudientController extends Controller
         );
     }
 
-    public function filter(Request $request)
+    public function filiere(Request $request)
     {
         $this->check($request);
 
