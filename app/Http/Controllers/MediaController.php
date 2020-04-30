@@ -21,7 +21,7 @@ class MediaController extends Controller
     public function index()
     {
     	//dd(storage_path('storage'));
-        return view('media.ckfinder');
+        return $this->view_('media.ckfinder');
     }
 
     public function connector()

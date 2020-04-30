@@ -31,7 +31,7 @@ class GroupeController extends Controller
                         ->orderBy($this->orderby, 'desc')->paginate($this->perpage())
                         ->withPath($this->url_params(true,['page'=>null]));
 
-        return view('groupe.list', [
+        return $this->view_('groupe.list', [
             'results'=>$groupes
         ]);
     }
@@ -41,7 +41,7 @@ class GroupeController extends Controller
      */
     public function create()
     {
-        return view('groupe.update',[
+        return $this->view_('groupe.update',[
             'object'=> new Groupe(),
         ]);
     }
@@ -79,7 +79,7 @@ class GroupeController extends Controller
     {
         $groupe = Groupe::findOrFail($id);
 
-        return view('groupe.update', [
+        return $this->view_('groupe.update', [
             'object'=>$groupe,
         ]);
     }

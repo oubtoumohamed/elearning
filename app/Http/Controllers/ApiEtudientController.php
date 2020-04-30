@@ -8,6 +8,7 @@ use App\Etudient;
 use App\Prof;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\EtudientController;
 
 
 class ApiEtudientController extends Controller
@@ -66,16 +67,60 @@ class ApiEtudientController extends Controller
         );
     }
 
+    public function filter(Request $request)
+    {
+        $this->check($request);
+
+        $user = $request->user();
+        $return = $user->etudient->filier();
+
+        return response()->json(
+            $return
+        );
+    }
+
     public function modules(Request $request)
     {
         $this->check($request);
 
         $user = $request->user();
-
         $return = [
-            "filier" => $user->etudient->filier(),
+            "filier" => $user->etudient->filier()->modules,
             "additional_modules" => $user->etudient->modules
         ];
+
+        return response()->json(
+            $return
+        );
+    }
+
+    public function courses(Request $request)
+    {
+        $this->check($request);
+
+        $user = $request->user();
+
+        $e = new EtudientController();
+        $e->use_API = true;
+
+        $return = $e->list_cours()['results'];
+        //$return = $e->show_cours(4);
+
+        return response()->json(
+            $return
+        );
+    }
+
+    public function courses(Request $request)
+    {
+        $this->check($request);
+
+        $user = $request->user();
+
+        $e = new EtudientController();
+        $e->use_API = true;
+
+        $return = $e->show_cours($request->id)['object'];
 
         return response()->json(
             $return

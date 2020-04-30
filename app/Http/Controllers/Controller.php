@@ -16,6 +16,11 @@ class Controller extends BaseController
     public $model='';
     public $orderby='created_at';
     public $filter_action = "#";
+    public $use_API = false;
+
+    public function view_($template, $data=[]){
+    	return ( $this->use_API ) ? $data : view($template, $data);
+    }
 
     public function AsPdf($object,$filename,$view,$view_parames=[],$orientation='P',$mode='I'){
 		$mpdf = new mPDF();

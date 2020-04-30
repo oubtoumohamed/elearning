@@ -139,7 +139,11 @@ class Etudient extends Model
         return $this->user->getavatar($size);
     }
 
-    public function Json(){
+    public function toArray(){
+        $f = $this->filier();
+        if( $f )
+            $f['modules'] = $this->filier()->modules;
+
         return [
             'id' => $this->id,
             'user_id' => $this->user->id,
@@ -151,8 +155,8 @@ class Etudient extends Model
             'cin' => $this->user->getcin(),
             'cne' => $this->getcne(),
 
-            'filier' => $this->filier(),
-            'joined_modules' => $this->modules,
+            'filier' => $f,            
+            'joined_modules' => $this->modules->toArray(),
         ];
     }
 }

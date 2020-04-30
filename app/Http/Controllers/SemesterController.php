@@ -30,7 +30,7 @@ class SemesterController extends Controller
                         ->orderBy($this->orderby, 'desc')->paginate($this->perpage())
                         ->withPath($this->url_params(true,['semester'=>null]));
 
-        return view('semester.list', [
+        return $this->view_('semester.list', [
             'results'=>$semesters
         ]);
     }
@@ -40,7 +40,7 @@ class SemesterController extends Controller
      */
     public function create()
     {
-        return view('semester.update',[
+        return $this->view_('semester.update',[
             'object'=> new Semester(),
         ]);
     }
@@ -78,7 +78,7 @@ class SemesterController extends Controller
     {
         $semester = Semester::findOrFail($id);
 
-        return view('semester.update', [
+        return $this->view_('semester.update', [
             'object'=>$semester
         ]);
     }

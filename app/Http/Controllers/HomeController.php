@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Module;
 use App\Session;
 use App\User;
+use App\Http\Controllers\EtudientController;
 
 class HomeController extends Controller
 {
@@ -28,22 +29,29 @@ class HomeController extends Controller
     {
         $user = auth()->user();
 
-        $return = [
-            "cin" => $request->cin,
-            "filier" => $user->etudient->filier(),
+        $e = new EtudientController();
+        $e->use_API = true;
+
+        $return = $e->list_cours()['results'];
+        //$return = $e->show_cours(4);
+
+
+
+        /*$return = [
+            "filier" => $user->etudient->filier()->modules,
             "additional_modules" => $user->etudient->modules
-        ];
+        ];*/
 
         return response()->json(
             $return
         );
 
 
-        return view('frontend.home');
+        return $this->view_('frontend.home');
     }
 
     public function admin()
     {
-        return view('home');
+        return $this->view_('home');
     }
 }

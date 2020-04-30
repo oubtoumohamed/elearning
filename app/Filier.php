@@ -28,4 +28,8 @@ class Filier extends Model
         return $this->description;
     }
 
+    public function modules(){
+        return $this->hasMany('App\Module');
+    }
+
 }

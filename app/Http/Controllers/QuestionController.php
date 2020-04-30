@@ -41,7 +41,7 @@ class QuestionController extends Controller
                         ->orderBy($this->orderby, 'desc')->paginate($this->perpage())
                         ->withPath($this->url_params(true,['question'=>null]));
 
-        return view('question.list', [
+        return $this->view_('question.list', [
             'results'=>$questions
         ]);
     }
@@ -52,7 +52,7 @@ class QuestionController extends Controller
     public function create()
     {
         $users = User::all();
-        return view('question.update',[
+        return $this->view_('question.update',[
             'object'=> new Question(),
             'users' => $users,
         ]);
@@ -110,7 +110,7 @@ class QuestionController extends Controller
 
         $users = User::all();
 
-        return view('question.update', [
+        return $this->view_('question.update', [
             'object'=>$question,
             'users' => $users,
         ]);
