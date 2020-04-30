@@ -111,7 +111,7 @@ class ApiEtudientController extends Controller
         );
     }
 
-    public function courses(Request $request)
+    public function course(Request $request)
     {
         $this->check($request);
 
