@@ -84,7 +84,7 @@ class CoursController extends Controller
                         ->paginate($this->perpage())
                         ->withPath($this->url_params(true,['cours'=>null]));
 
-        return view('cours.list', [
+        return $this->view_('cours.list', [
             'results'=>$courss
         ]);
     }
@@ -93,7 +93,7 @@ class CoursController extends Controller
      */
     public function create()
     {
-        return view('cours.update',[
+        return $this->view_('cours.update',[
             'object'=> new Cours(),
         ]);
     }
@@ -150,7 +150,7 @@ class CoursController extends Controller
             ['prof_id', $prof->id]
         ])->firstOrFail();
 
-        return view('cours.update', [
+        return $this->view_('cours.update', [
             'object'=>$cours
         ]);
     }

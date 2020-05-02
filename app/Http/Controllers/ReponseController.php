@@ -42,7 +42,7 @@ class ReponseController extends Controller
                         ->orderBy($this->orderby, 'desc')->paginate($this->perpage())
                         ->withPath($this->url_params(true,['reponse'=>null]));
 
-        return view('reponse.list', [
+        return $this->view_('reponse.list', [
             'results'=>$reponses
         ]);
     }
@@ -54,7 +54,7 @@ class ReponseController extends Controller
     {
         $users = User::all();
         $questions = Question::all();
-        return view('reponse.update',[
+        return $this->view_('reponse.update',[
             'object'=> new Reponse(),
             'users' => $users,
             'questions' => $questions,
@@ -101,7 +101,7 @@ class ReponseController extends Controller
         $users = User::all();
         $questions = Question::all();
 
-        return view('reponse.update', [
+        return $this->view_('reponse.update', [
             'object'=>$reponse,
             'users' => $users,
             'questions' => $questions,

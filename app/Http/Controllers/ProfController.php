@@ -55,7 +55,7 @@ class ProfController extends Controller
                     ->paginate($this->perpage())
                     ->withPath($this->url_params(true,['page'=>null]));
 
-        return view('prof.list', [
+        return $this->view_('prof.list', [
             'results'=>$users
         ]);
     }
@@ -66,7 +66,7 @@ class ProfController extends Controller
     public function create()
     {
         $modules = Module::all();
-        return view('prof.update',[
+        return $this->view_('prof.update',[
             'object'=> new Prof(),
             'modules'=>$modules,
         ]);
@@ -127,7 +127,7 @@ class ProfController extends Controller
     {
         return $this->edit($id);
         /*$user = User::findOrFail($id);
-        return view('prof.show', [
+        return $this->view_('prof.show', [
             'object'=>$user
         ]);*/
     }
@@ -140,7 +140,7 @@ class ProfController extends Controller
         $prof = Prof::findOrFail($id);
         $modules = Module::all();
 
-        return view('prof.update', [
+        return $this->view_('prof.update', [
             'object'=>$prof,
             'modules'=>$modules,
         ]);

@@ -33,7 +33,7 @@ class FilierController extends Controller
                         ->orderBy($this->orderby, 'desc')->paginate($this->perpage())
                         ->withPath($this->url_params(true,['filier'=>null]));
 
-        return view('filier.list', [
+        return $this->view_('filier.list', [
             'results'=>$filiers
         ]);
     }
@@ -43,7 +43,7 @@ class FilierController extends Controller
      */
     public function create()
     {
-        return view('filier.update',[
+        return $this->view_('filier.update',[
             'object'=> new Filier(),
         ]);
     }
@@ -82,7 +82,7 @@ class FilierController extends Controller
     {
         $filier = Filier::findOrFail($id);
 
-        return view('filier.update', [
+        return $this->view_('filier.update', [
             'object'=>$filier
         ]);
     }

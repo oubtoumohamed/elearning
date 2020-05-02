@@ -8,6 +8,7 @@ use App\Etudient;
 use App\Prof;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\EtudientController;
 
 
 class ApiEtudientController extends Controller
@@ -41,7 +42,7 @@ class ApiEtudientController extends Controller
             $user = $etudient ? $etudient->user : null;
         }
 
-        if(! \Auth::loginUsingId($user->id) )
+        if(!$user || ! \Auth::loginUsingId($user->id) )
             return response()->json(['message' => 'Unauthorized'], 401);
 
         $tokenResult = $user->createToken('Student Login');
@@ -49,21 +50,84 @@ class ApiEtudientController extends Controller
         $token = $tokenResult->token;
         $token->expires_at = Carbon::now()->addWeeks(4);
         $token->save();
-        return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse( $tokenResult->token->expires_at )->toDateTimeString(),
-            'etudient' => $etudient->Json(),
-        ]);
+
+        $return = $etudient->Json();
+        $return['access_token'] = $tokenResult->accessToken;
+        $return['token_type'] = 'Bearer';
+        $return['expires_at'] = Carbon::parse($tokenResult->token->expires_at)->toDateTimeString();
+
+        return response()->json($return);
     }
 
     public function details(Request $request)
     {
         $this->check($request);
-        return response()->json([
-            'etudient' => $request->user()->etudient->Json()
-        ]);
+        return response()->json(
+            $request->user()->etudient->Json()
+        );
     }
+
+    public function filiere(Request $request)
+    {
+        $this->check($request);
+
+        $user = $request->user();
+        $return = $user->etudient->filier();
+
+        return response()->json(
+            $return
+        );
+    }
+
+    public function modules(Request $request)
+    {
+        $this->check($request);
+
+        $user = $request->user();
+        $return = [
+            "filier" => $user->etudient->filier()->modules,
+            "additional_modules" => $user->etudient->modules
+        ];
+
+        return response()->json(
+            $return
+        );
+    }
+
+    public function courses(Request $request)
+    {
+        $this->check($request);
+
+        $user = $request->user();
+
+        $e = new EtudientController();
+        $e->use_API = true;
+
+        $return = $e->list_cours()['results'];
+        //$return = $e->show_cours(4);
+
+        return response()->json(
+            $return
+        );
+    }
+
+    public function course(Request $request)
+    {
+        $this->check($request);
+
+        $user = $request->user();
+
+        $e = new EtudientController();
+        $e->use_API = true;
+
+        $return = $e->show_cours($request->id)['object'];
+
+        return response()->json(
+            $return
+        );
+    }
+
+
   
     /**
      * Logout user (Revoke the token)

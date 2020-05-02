@@ -69,7 +69,7 @@ class UsersController extends Controller
                     ->paginate($this->perpage())
                     ->withPath($this->url_params(true,['page'=>null]));
 
-        return view('user.list', [
+        return $this->view_('user.list', [
             'results'=>$users
         ]);
     }
@@ -81,7 +81,7 @@ class UsersController extends Controller
     {
         $groupes = Groupe::all();
         
-        return view('user.update',[
+        return $this->view_('user.update',[
             'object'=> new User(),
             'groupes'=>$groupes
         ]);
@@ -141,7 +141,7 @@ class UsersController extends Controller
     {
         return $this->edit($id);
         /*$user = User::findOrFail($id);
-        return view('user.show', [
+        return $this->view_('user.show', [
             'object'=>$user
         ]);*/
     }
@@ -154,7 +154,7 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $groupes = Groupe::all();
 
-        return view('user.update', [
+        return $this->view_('user.update', [
             'object'=>$user,
             'groupes'=>$groupes
         ]);

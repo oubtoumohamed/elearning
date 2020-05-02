@@ -58,7 +58,7 @@ class EtudientController extends Controller
                     ->paginate($this->perpage())
                     ->withPath($this->url_params(true,['page'=>null]));
 
-        return view('etudient.list', [
+        return $this->view_('etudient.list', [
             'results'=>$etudients
         ]);
     }
@@ -72,7 +72,7 @@ class EtudientController extends Controller
     {
         $filiers = Filier::all();
         $modules = Module::all();
-        return view('etudient.update',[
+        return $this->view_('etudient.update',[
             'object'=> new Etudient(),
             'filiers'=>$filiers,
             'modules'=>$modules,
@@ -135,7 +135,7 @@ class EtudientController extends Controller
     {
         return $this->edit($id);
         /*$user = User::findOrFail($id);
-        return view('etudient.show', [
+        return $this->view_('etudient.show', [
             'object'=>$user
         ]);*/
     }
@@ -149,7 +149,7 @@ class EtudientController extends Controller
         $filiers = Filier::all();
         $modules = Module::all();
 
-        return view('etudient.update', [
+        return $this->view_('etudient.update', [
             'object'=>$etudient,
             'filiers'=>$filiers,
             'modules'=>$modules,
@@ -228,7 +228,7 @@ class EtudientController extends Controller
                         ->paginate($this->perpage())
                         ->withPath($this->url_params(true,['cours'=>null]));
 
-        return view('etudient.list_cours', [
+        return $this->view_('etudient.list_cours', [
             'results'=>$courss
         ]);
     }
@@ -243,7 +243,7 @@ class EtudientController extends Controller
                         ->firstOrfail();
 
 
-        return view('etudient.show_cours', [
+        return $this->view_('etudient.show_cours', [
             'object'=>$cours
         ]);
     }

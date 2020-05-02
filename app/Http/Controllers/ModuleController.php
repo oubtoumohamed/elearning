@@ -45,7 +45,7 @@ class ModuleController extends Controller
                         ->orderBy($this->orderby, 'desc')->paginate($this->perpage())
                         ->withPath($this->url_params(true,['module'=>null]));
 
-        return view('module.list', [
+        return $this->view_('module.list', [
             'results'=>$modules
         ]);
     }
@@ -57,7 +57,7 @@ class ModuleController extends Controller
     {
         $semesters = Semester::all();
         $filiers = Filier::all();
-        return view('module.update',[
+        return $this->view_('module.update',[
             'object'=> new Module(),
             'semesters' => $semesters,
             'filiers' => $filiers,
@@ -107,7 +107,7 @@ class ModuleController extends Controller
         $semesters = Semester::all();
         $filiers = Filier::all();
 
-        return view('module.update', [
+        return $this->view_('module.update', [
             'object'=>$module,
             'semesters' => $semesters,
             'filiers' => $filiers,
