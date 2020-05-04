@@ -115,7 +115,18 @@ class ApiProfController extends Controller
             $return
         );
     }
-    
+        // the following function return the list of (question <-> response) of a particular course ( $course_id)
+    public function Question_Rep(Request $request , $cour_id){
+        $user = $request->user();
+        $cours = $user->prof->cours;
+        foreach($cours as $cour){
+            if($cour->id == $cour_id )
+            $qsts = $cour->questions;
+         }
+      return response()->json([
+        "questions" =>$qsts 
+        ]);
+    }
     /************************************
      * 
      *             Creat
@@ -155,7 +166,7 @@ class ApiProfController extends Controller
     
 
     /*****************************************
-     *              Update
+     *              Update ( in process )
      ******************************************/
      
     public function UpdateCour(Request $request)
@@ -172,7 +183,13 @@ class ApiProfController extends Controller
 
     }
 
-    /**
+    /***************************************
+     *            Quiz  ( in process )
+     **************************************/
+    
+    
+    
+     /**
      * Logout user (Revoke the token)
      *
      * @return [string] message
