@@ -27,11 +27,14 @@ class ApiProfController extends Controller
             ], 404);
     }
 
+   //************************************* */
+   //************  Login     ************ */
+   //*********************************** */
     public function login(Request $request)
     {
         $this->validate($request,[
-            'matricule' => 'required|string',
-            'cin' => 'required|string',
+            'matricule'=>'required|string',
+            'cin'=>'required|string',
         ]);
 
         $user = $request->user();
@@ -39,12 +42,12 @@ class ApiProfController extends Controller
         if(!$user){
             $prof = Prof::where('matricule', request('matricule'))->whereHas('user',function($query){
                             $query->where([
-                                ['matricule',request('matricule')],
+                                ['cin',request('cin')],
                                 ['role','PROF']
                             ]);
                         })->first();
 
-            $user = $prof ? $etudient->user : null;
+            $user = $prof ? $prof->user : null;
         }
 
         if(!$user || ! \Auth::loginUsingId($user->id) )
@@ -76,6 +79,8 @@ class ApiProfController extends Controller
      * ******            verified           ***********
      * ************************************************
      */
+
+     //*********** Get the professors the Courses  */
     public function Cours(Request $request){
         $this->check($request);
         $user = $request->user();
@@ -85,7 +90,7 @@ class ApiProfController extends Controller
       );
     }
 
-
+    //************** Get the professors Modules */
     public function Modules(Request $request){
        $this->check($request);
       $user = $request->user();
@@ -95,6 +100,7 @@ class ApiProfController extends Controller
     );
   }
   
+  //*************** Get all the existing branches */
   public function AllFilieres(Request $request){
     $this->check($request);
     $filiers = Filier::get();
@@ -102,25 +108,26 @@ class ApiProfController extends Controller
         $filiers
     );
     }
-
+  //**************** dic of {branch => [modules] } */
     public function Filier_Modules(Request $request){
             $this->check($request);
             $user = $request->user();
             $modules = $user->prof->modules;
             $return = [];
             foreach($modules as $module){
-                $return[$module->filier->name]= $module;
+                $return[$module->filier->name][] = $module;
             }
             return response()->json(
             $return
         );
     }
         // the following function return the list of (question <-> response) of a particular course ( $course_id)
-    public function Question_Rep(Request $request , $cour_id){
+    public function Question_Rep(Request $request){
+        $this->check($request);
         $user = $request->user();
         $cours = $user->prof->cours;
         foreach($cours as $cour){
-            if($cour->id == $cour_id )
+            if($cour->id == 10 )
             $qsts = $cour->questions;
          }
       return response()->json([
@@ -166,21 +173,18 @@ class ApiProfController extends Controller
     
 
     /*****************************************
-     *              Update ( in process )
+     *              Update 
      ******************************************/
      
     public function UpdateCour(Request $request)
     {
+        $this->check($request);
+        $user = $request->user();
 
-    }
+        $C = new CoursController();
+        $C->use_API = true;
 
-    public function UpdateQuestion(Request $request)
-    {
-
-    }
-    public function UpdateReponse(Request $request)
-    {
-
+        $return = $C->update($request, $request->id);
     }
 
     /***************************************
