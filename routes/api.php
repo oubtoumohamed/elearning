@@ -51,3 +51,28 @@ Route::group(['prefix' => 'etudient'], function () {
         Route::get('logout', 'ApiEtudientController@logout');
     });
 });
+
+Route::group(['prefix' => 'prof'], function () {
+
+    //Route::post('signup', 'ApiEtudientController@signup');
+    Route::post('login', 'ApiProfController@login');
+  
+    Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::get('Cours', 'ApiProfController@Cours');
+        Route::get('Modules', 'ApiProfController@Modules');
+        Route::get('AllFilieres', 'ApiProfController@AllFilieres');
+        Route::get('Filier_Modules', 'ApiProfController@Filier_Modules');
+        Route::get('Question_Rep', 'ApiProfController@Question_Rep');
+        //creation 
+        Route::post('Newcourse', 'ApiProfController@Newcourse');
+        Route::post('NewQuestion', 'ApiProfController@NewQuestion');
+        Route::post('NewReponse', 'ApiProfController@NewReponse');
+        //update 
+        Route::put('UpdateCour/{id}', 'ApiProfController@UpdateCour');
+
+        Route::get('details', 'ApiProfController@details');
+        Route::get('logout', 'ApiProfController@logout');
+    });
+});
