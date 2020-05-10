@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Module;
 use App\Session;
 use App\User;
+use App\Filier;
+use App\Prof_module;
 use App\Http\Controllers\EtudientController;
 
 class HomeController extends Controller
@@ -27,7 +29,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $user = auth()->user();
+        /*$user = auth()->user();
 
         $e = new EtudientController();
         $e->use_API = true;
@@ -50,11 +52,12 @@ class HomeController extends Controller
 
         return response()->json(
             $return
-        );
+        );*/
 
 
         return $this->view_('frontend.home');
     }
+
 
     public function admin()
     {
