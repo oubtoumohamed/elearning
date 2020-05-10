@@ -27,12 +27,28 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-
-
     public function index(Request $request)
     {
-        
+        /*$user = auth()->user();
+
+        $e = new EtudientController();
+        $e->use_API = true;
+
+        $return = $e->list_cours()['results'];
+        //$return = $e->show_cours(4);
+
+
+
+        /*$return = [
+            "filier" => $user->etudient->filier()->modules,
+            "additional_modules" => $user->etudient->modules
+        ];*/
+
+        return response()->json(
+            $return
+        );*/
+
+
         return $this->view_('frontend.home');
     }
 
