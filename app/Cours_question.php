@@ -10,8 +10,6 @@ class Cours_question extends Model
         'contenu','cours_id','user_id','question_id','readed'
     ];
 
-
-
     public function __toString(){
         return ( $this->id ) ? "#".$this->id : "";
     }

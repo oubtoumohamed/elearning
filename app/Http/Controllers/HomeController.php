@@ -32,8 +32,14 @@ class HomeController extends Controller
         $e = new EtudientController();
         $e->use_API = true;
 
-        $return = $e->list_cours()['results'];
-        //$return = $e->show_cours(4);
+        $object = $e->show_cours($request->id)['object'];
+
+        foreach ($object->questions as $q) {
+            $q->reponses;
+            $msg[] = $q->toArray();
+        }
+        
+        $return = $object;
 
 
 

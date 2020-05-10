@@ -13,6 +13,7 @@ use App\Http\Controllers\EtudientController;
 
 class ApiEtudientController extends Controller
 {
+    public $Etud_Ctrl;
 
     public function check(Request $request)
     {
@@ -20,6 +21,9 @@ class ApiEtudientController extends Controller
             return response()->json([
                 'error' => 'Student Not found'
             ], 404);
+
+        $this->Etud_Ctrl = new EtudientController();
+        $this->Etud_Ctrl->use_API = true;
     }
 
     public function login(Request $request)
@@ -100,10 +104,8 @@ class ApiEtudientController extends Controller
 
         $user = $request->user();
 
-        $e = new EtudientController();
-        $e->use_API = true;
 
-        $return = $e->list_cours()['results'];
+        $return = $this->Etud_Ctrl->list_cours()['results'];
         //$return = $e->show_cours(4);
 
         return response()->json(
@@ -117,10 +119,8 @@ class ApiEtudientController extends Controller
 
         $user = $request->user();
 
-        $e = new EtudientController();
-        $e->use_API = true;
 
-        $return = $e->show_cours($request->id)['object'];
+        $return = $this->Etud_Ctrl->show_cours($request->id)['object'];
 
         return response()->json(
             $return
