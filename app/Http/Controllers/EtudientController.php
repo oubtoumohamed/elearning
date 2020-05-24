@@ -15,8 +15,7 @@ class EtudientController extends Controller
 {
 
     public $model = 'etudient';
-    public function filter_fields(){
-        return [
+    public $filier_array_fields = [
             'avatar'=>null,
             'cne'=>[
                 'type'=>'text',
@@ -39,6 +38,9 @@ class EtudientController extends Controller
                 'operation'=>null,
             ]
         ];
+    
+    public function filter_fields(){
+        return $this->filier_array_fields;
     }
 
     public function __construct()

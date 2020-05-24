@@ -155,7 +155,7 @@ class Etudient extends Model
             'cin' => $this->user->getcin(),
             'cne' => $this->getcne(),
 
-            'filier' => $f,            
+            'filiere' => $f,
             'joined_modules' => $this->modules->toArray(),
         ];
     }

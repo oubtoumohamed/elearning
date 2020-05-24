@@ -182,12 +182,15 @@ class Controller extends BaseController
 
 			$type = $args['type'];
 
-			if(!isset($args['value'])){
-				$args['value'] = $filter[$name]["value"];
+			if(!isset($args['value']) ){
+				if( $filter != null && array_key_exists($name,$filter) )
+					$args['value'] = $filter[$name]["value"];
+				else
+					$args['value'] = null;
 			}
 
 			$field = array_merge($default_filter_options[$type], $args);
-
+			
 		  	if(isset($field['value'])){
 		  		switch ($field['operation']) {
 		  			case null:
@@ -201,15 +204,20 @@ class Controller extends BaseController
 		  				$fields[] = [ $name , $field['operation'], $field['value'] ];
 		  				break;	
 		  			case 'date-like':
-		  				list($y,$m,$d) = explode('-', $field['value']);
-		  				$fields[] = [ $name , 'like', '%'.$y.'-'.$m.'-'.$d.'%' ];
+		  				if( $field['value'] ){
+			  				list($y,$m,$d) = explode('-', $field['value']);
+			  				$fields[] = [ $name , 'like', '%'.$y.'-'.$m.'-'.$d.'%' ];
+		  				}
 		  				break;	
 		  			case 'date-time-like':
-		  				list($date,$time) = explode(' ', $field['value']);
-		  				list($y,$m,$d) = explode('-', $date);
-		  				list($hour,$min) = explode(':', $time);
-		  				$fields[] = [ $name , 'like', '%'.$y.'-'.$m.'-'.$d.' '.$hour.'%' ];
-		  				break;		  			
+		  				if( $field['value'] ){
+			  				list($date,$time) = explode(' ', $field['value']);
+			  				list($y,$m,$d) = explode('-', $date);
+			  				list($hour,$min) = explode(':', $time);
+			  				$fields[] = [ $name , 'like', '%'.$y.'-'.$m.'-'.$d.' '.$hour.'%' ];
+			  				//$fields[] = [ $name , '<=', $y.'-'.$m.'-'.$d.' '.$hour.':'.$min ];
+			  			}
+		  				break;
 		  			default:
 		  				$fields[] = [ $name , $field['operation'], '%'.$field['value'].'%' ];
 		  				break;
