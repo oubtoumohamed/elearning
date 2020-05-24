@@ -50,7 +50,7 @@ class HomeController extends Controller
             "additional_modules" => $user->etudient->modules
         ];*/
 
-        return response()->json(
+        /*return response()->json(
             $return
         );*/
 
