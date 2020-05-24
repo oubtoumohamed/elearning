@@ -120,6 +120,10 @@ class ApiEtudientController extends Controller
 
         $return = $this->Etud_Ctrl->list_cours()['results'];
         //$return = $e->show_cours(4);
+        $filter = request('filter');
+        if( array_key_exists("now", $filter) ){
+        	$return = $return->items() ? $return->items()[0] : null;
+        }
 
         return response()->json(
             $return
