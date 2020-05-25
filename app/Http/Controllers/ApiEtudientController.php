@@ -125,7 +125,7 @@ class ApiEtudientController extends Controller
 
         // aded modules
 		$return[ -1 ] = [
-			'id' = -1,
+			'id' => -1,
 			'name' => "aded modules",
 			'modules' => [],
 		];
@@ -134,8 +134,8 @@ class ApiEtudientController extends Controller
 
         	$semester = $module->semester;
         	
-        	if( !array_key_exists($semester->id, $return))
-        		$return[ $semester->id ] = [
+        	if( !array_key_exists("added - ".$semester->id, $return))
+        		$return[ "added - ".$semester->id ] = [
         			'id' => $semester->id,
         			'name' => $semester->name,
         			'modules' => [],
