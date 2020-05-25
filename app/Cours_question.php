@@ -10,6 +10,7 @@ class Cours_question extends Model
         'message',
         'auteur',
         'date',
+        'time',
     );
 
     public function getMessageAttribute()
@@ -24,7 +25,12 @@ class Cours_question extends Model
 
     public function getDateAttribute()
     {
-        return $this->created_at->format('Y-m-d H:i:s');
+        return $this->created_at->format('Y-m-d');
+    }
+
+    public function getTimeAttribute()
+    {
+        return $this->created_at->format('H:i:s');
     }
     
     protected $fillable = [
