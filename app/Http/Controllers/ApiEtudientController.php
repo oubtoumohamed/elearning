@@ -196,7 +196,7 @@ class ApiEtudientController extends Controller
         $user = $request->user();
 
         $wheres = [
-        	['cours_id', '=', $request->course_id]
+        	['cours_id', '=', $request->cours_id]
         ];
         if( $request->id )
 	        $wheres[] = ['id', '>=', $request->id];
@@ -205,6 +205,26 @@ class ApiEtudientController extends Controller
         $return = Cours_question::where($wheres)->limit(10)->get();
 
         //$return = $this->Etud_Ctrl->show_cours($request->id)['object'];
+
+        return response()->json(
+            $return
+        );
+    }
+
+    public function send_message(Request $request)
+    {
+        $this->check($request);
+
+        $user = $request->user();
+
+        $question = Cours_question::create([
+            'contenu'=>$request->msg,
+            'cours_id'=>$request->cours_id,
+            'user_id'=>$user->id,
+            'question_id'=>$request->question_id
+        ]);
+
+        $return = ( $question && $question->id );
 
         return response()->json(
             $return
