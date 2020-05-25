@@ -166,6 +166,8 @@ class ApiEtudientController extends Controller
         $filter = request('filter');
         if( array_key_exists("now", $filter) ){
         	$return = $return->items() ? $return->items()[0] : null;
+        }else{
+        	$return = $return->items();
         }
 
         return response()->json(
