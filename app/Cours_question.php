@@ -24,7 +24,7 @@ class Cours_question extends Model
 
     public function getDateAttribute()
     {
-        return $this->created_at->format('y-m-d H:s:m');
+        return $this->created_at->format('Y-m-d H:i:s');
     }
     
     protected $fillable = [
