@@ -43,6 +43,7 @@ Route::group(['prefix' => 'etudient'], function () {
     Route::group([
       'middleware' => 'auth:api'
     ], function() {
+        Route::get('modules_semesters', 'ApiEtudientController@modules_semesters');
         Route::get('course', 'ApiEtudientController@course');
         Route::get('courses', 'ApiEtudientController@courses');
         Route::get('filiere', 'ApiEtudientController@filiere');

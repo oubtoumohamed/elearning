@@ -101,10 +101,51 @@ class ApiEtudientController extends Controller
         );
     }
 
-    public function courses(Request $request)
+    public function modules_semesters(Request $request)
     {
         $this->check($request);
 
+        $user = $request->user();
+        $return = array();
+
+        // modules of filier
+
+        foreach ($user->etudient->filier()->modules as $module) {
+
+        	$semester = $module->semester;
+        	
+        	if( !array_key_exists($semester->id, $return))
+        		$return[ $semester->id ] = [
+        			'id' => $semester->id,
+        			'name' => $semester->name,
+        			'modules' => [],
+        		];
+        	$return[ $semester->id ]['modules'][] = $module;
+        }
+
+        // aded modules
+
+        foreach ($user->etudient->modules as $module) {
+
+        	$semester = $module->semester;
+        	
+        	if( !array_key_exists($semester->id, $return))
+        		$return[ $semester->id ] = [
+        			'id' => $semester->id,
+        			'name' => $semester->name,
+        			'modules' => [],
+        		];
+        	$return[ "added - ".$semester->id ]['modules'][] = $module;
+        }
+
+        return response()->json(
+            $return
+        );
+    }
+
+    public function courses(Request $request)
+    {
+        $this->check($request);
         $user = $request->user();
 
         $this->Etud_Ctrl->filier_array_fields = [
@@ -114,9 +155,6 @@ class ApiEtudientController extends Controller
             'start'	=>	[ 'type'=>'datetimepicker', 'operation'=>'<=' ],
             'end'	=>	[ 'type'=>'datetimepicker', 'operation'=>'>=' ]
         ];
-
-        //?filter[start][value]=2020-05-24 19:18&filter[end][value]=2020-05-24 20
-
 
         $return = $this->Etud_Ctrl->list_cours()['results'];
         //$return = $e->show_cours(4);
@@ -129,33 +167,6 @@ class ApiEtudientController extends Controller
             $return
         );
     }
-
-    /*public function course_now()
-    {
-        $this->check($request);
-        $user = $request->user();
-
-        $return = $this->Etud_Ctrl->show_cours($request->id)['object'];
-
-        return response()->json(
-            $return
-        );
-
-        //$etudient->filier
-        $now = Carbon::now()->format('y-m-d');
-        $courss = Cours::where([
-        					['start', '>=' ,$now],
-        					['end', '<=' ,$now]
-        				])
-                        ->whereIn('module_id',$user->etudient->modules_ids())
-                        ->orderBy('module_id', 'desc')
-                        ->paginate($this->perpage())
-                        ->withPath($this->url_params(true,['cours'=>null]));
-
-        return $this->view_('etudient.list_cours', [
-            'results'=>$courss
-        ]);
-    }*/
 
     public function course(Request $request)
     {
