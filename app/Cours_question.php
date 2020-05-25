@@ -6,6 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cours_question extends Model
 {
+    protected $appends = array(
+        'message',
+        'auteur',
+        'date',
+    );
+
+    public function getMessageAttribute()
+    {
+        return $this->contenu;
+    }
+
+    public function getAuteurAttribute()
+    {
+        return $this->user->__toString();
+    }
+
+    public function getDateAttribute()
+    {
+        return $this->created_at;
+    }
+    
     protected $fillable = [
         'contenu','cours_id','user_id','question_id','readed'
     ];
