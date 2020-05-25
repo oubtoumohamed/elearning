@@ -124,6 +124,11 @@ class ApiEtudientController extends Controller
         }
 
         // aded modules
+		$return[ -1 ] = [
+			'id' = -1,
+			'name' => "aded modules",
+			'modules' => [],
+		];
 
         foreach ($user->etudient->modules as $module) {
 
@@ -139,7 +144,7 @@ class ApiEtudientController extends Controller
         }
 
         return response()->json(
-            $return
+        	array_values( $return )
         );
     }
 
