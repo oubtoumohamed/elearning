@@ -45,6 +45,7 @@ Route::group(['prefix' => 'etudient'], function () {
     ], function() {
         Route::get('modules_semesters', 'ApiEtudientController@modules_semesters');
         Route::get('course', 'ApiEtudientController@course');
+        Route::get('course/messages', 'ApiEtudientController@messages');
         Route::get('courses', 'ApiEtudientController@courses');
         Route::get('filiere', 'ApiEtudientController@filiere');
         Route::get('modules', 'ApiEtudientController@modules');

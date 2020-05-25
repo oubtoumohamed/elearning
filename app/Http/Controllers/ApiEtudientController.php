@@ -7,6 +7,7 @@ use App\User;
 use App\Etudient;
 use App\Prof;
 use App\Cours;
+use App\Cours_question;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\EtudientController;
@@ -182,6 +183,28 @@ class ApiEtudientController extends Controller
         $user = $request->user();
 
         $return = $this->Etud_Ctrl->show_cours($request->id)['object'];
+
+        return response()->json(
+            $return
+        );
+    }
+    // course messages
+    public function messages(Request $request)
+    {
+        $this->check($request);
+
+        $user = $request->user();
+
+        $wheres = [
+        	['cours_id', '=', $request->course_id]
+        ];
+        if( $request->id )
+	        $wheres[] = ['id', '>=', $request->id];
+
+
+        $return = Cours_question::where($wheres)->get();
+
+        //$return = $this->Etud_Ctrl->show_cours($request->id)['object'];
 
         return response()->json(
             $return
