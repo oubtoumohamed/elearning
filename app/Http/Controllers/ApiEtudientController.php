@@ -202,7 +202,7 @@ class ApiEtudientController extends Controller
 	        $wheres[] = ['id', '>=', $request->id];
 
 
-        $return = Cours_question::where($wheres)->get();
+        $return = Cours_question::where($wheres)->limit(10)->get();
 
         //$return = $this->Etud_Ctrl->show_cours($request->id)['object'];
 
