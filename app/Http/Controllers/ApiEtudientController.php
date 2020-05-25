@@ -126,7 +126,7 @@ class ApiEtudientController extends Controller
         // aded modules
 		$return[ -1 ] = [
 			'id' => -1,
-			'name' => "aded modules",
+			'name' => "added modules",
 			'modules' => [],
 		];
 
