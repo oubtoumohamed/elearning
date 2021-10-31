@@ -20,7 +20,7 @@
                   @if( isGranted('ADMIN') )
                   <li class="nav-item mn groupe">
                     <a href="{{ route('groupe') }}" class="nav-link">
-                      <i class="fa fa-list"></i> 
+                      <i class="fas fa-layer-group"></i> 
                       {{ __('groupe.module_name') }}
                     </a>
                   </li>
@@ -50,12 +50,12 @@
                   </li>
                   @endif
                   @if( isGranted('ADMIN') )
-                  <li class="nav-item mn semester">
+                  <!--li class="nav-item mn semester">
                     <a href="{{ route('semester') }}" class="nav-link">
                       <i class="fa fa-list"></i> 
                       {{ __('semester.module_name') }}
                     </a>
-                  </li>
+                  </li-->
                   @endif
                   @if( isGranted('ADMIN') )
                   <li class="nav-item mn filier">
@@ -82,20 +82,20 @@
                   </li>
                   @endif
                   @if( isGranted('ADMIN') )
-                  <li class="nav-item mn question">
+                  <!--li class="nav-item mn question">
                     <a href="{{ route('question') }}" class="nav-link">
                       <i class="fa fa-bookmark"></i> 
                       {{ __('question.module_name') }}
                     </a>
-                  </li>
+                  </li-->
                   @endif
                   @if( isGranted('ADMIN') )
-                  <li class="nav-item mn reponse">
+                  <!--li class="nav-item mn reponse">
                     <a href="{{ route('reponse') }}" class="nav-link">
                       <i class="fa fa-bookmark"></i> 
                       {{ __('reponse.module_name') }}
                     </a>
-                  </li>
+                  </li-->
                   @endif
 
 

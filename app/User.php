@@ -143,14 +143,14 @@ class User extends Authenticatable
         global $filter;
         $filter = request('filter');
 
-        if( $filter["groupes"] and $filter["groupes"]['value'] ){
+        /*if( $filter["groupes"] and $filter["groupes"]['value'] ){
             return $query->whereHas('groupes', function ($query) {
                 global $filter;
 
 
                 $query->where('groupe_id', $filter["groupes"]['value']);
             });
-        }
+        }*/
     }
 
     public function getcne(){

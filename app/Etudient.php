@@ -24,7 +24,7 @@ class Etudient extends Model
         global $filter;
         $filter = request('filter');
 
-        if( 
+    /*    if( 
             ( $filter["name"] and $filter["name"]['value'] ) || 
             ( $filter["cin"] and $filter["cin"]['value'] ) || 
             ( $filter["email"] and $filter["email"]['value'] ) || 
@@ -66,10 +66,11 @@ class Etudient extends Model
 
                 $query->where($where);
             });
-        }
+        }*/
     }
 
     public function user(){
+        
         return $this->belongsTo('App\User');
     }
     

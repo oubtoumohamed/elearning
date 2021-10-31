@@ -26,11 +26,11 @@ class ModuleController extends Controller
                 'table'=>'filiers',
                 'fields' => ['id as key_','name as value_'],
             ],
-            'semester_id'=>[
+            /*'semester_id'=>[
                 'type'=>'select',
                 'table'=>'semesters',
                 'fields' => ['id as key_','name as value_'],
-            ],
+            ],*/
         ];
     }
 
@@ -72,7 +72,7 @@ class ModuleController extends Controller
         $this->validate(request(), [
             'name' => 'required|string|max:255',
             'ref' => 'required|string|max:255',
-            'semester_id' => 'required|integer|max:255',
+            //'semester_id' => 'required|integer|max:255',
             'filier_id' => 'required|integer|max:255',
         ]);
 
@@ -81,7 +81,7 @@ class ModuleController extends Controller
             'name'=>request('name'),
             'description'=>request('description'),
             'filier_id'=>request('filier_id'),
-            'semester_id'=>request('semester_id'),
+            //'semester_id'=>request('semester_id'),
         ]);
        
 

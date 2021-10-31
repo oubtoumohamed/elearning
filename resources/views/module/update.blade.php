@@ -36,7 +36,7 @@
             </select>
           </div>
         </div>
-        <div class="col-md-6">
+        <!--div class="col-md-6">
           <div class="form-group">
             <label class="form-label">{{ __('module.semester_id') }}</label>
             <select class="form-control" id="semester_id" name="semester_id" required="">
@@ -45,7 +45,7 @@
               @endforeach
             </select>
           </div>
-        </div>
+        </div-->
         <div class="col-md-12">
           <div class="form-group">
             <label class="form-label">{{ __('module.description') }}</label>
