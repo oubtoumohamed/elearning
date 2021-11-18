@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use App\Cours;
+use App\Quiz;
+//use App\Cours;
 use App\Cours_question;
 use App\Quizquestion;
 
-class CoursController extends Controller
+class QuizController extends Controller
 {
-    public $model = 'cours';
+    protected $table = 'cours';
+    public $model = 'quiz';
+
     public function filter_fields(){
         $auth = auth()->user();
         $prof = $auth->prof;
@@ -25,9 +28,7 @@ class CoursController extends Controller
             'type'=>[
                 'type'=>'select',
                 'data'=>[
-                    'Cours'=>'Cours',
-                    'TP'=>'TP',
-                    'TD'=>'TD',
+                    'Quiz'=>'Quiz',
                 ]
             ],
             'module_id' => [],
@@ -78,14 +79,14 @@ class CoursController extends Controller
         $auth = auth()->user();
         //dd($auth);
         $prof = $auth->prof;
-        $courss = Cours::where($this->filter(false))
+        $courss = Quiz::where($this->filter(false))
                         ->where('prof_id',$prof->id)
-                        ->where('type','!=','Quiz')
+                        ->where('type','Quiz')
                         ->orderBy($this->orderby, 'desc')
                         ->paginate($this->perpage())
                         ->withPath($this->url_params(true,['cours'=>null]));
 
-        return $this->view_('cours.list', [
+        return $this->view_('quiz.list', [
             'results'=>$courss
         ]);
     }
@@ -94,8 +95,8 @@ class CoursController extends Controller
      */
     public function create()
     {
-        return $this->view_('cours.update',[
-            'object'=> new Cours(),
+        return $this->view_('quiz.update',[
+            'object'=> new Quiz(),
         ]);
     }
 
@@ -106,7 +107,7 @@ class CoursController extends Controller
     {
         $this->validate(request(), [
             'titre' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
+            //'type' => 'required|string|max:255',
             'module_id' => 'required|string|max:255',
             'start' => 'required|string|max:255',
             'end' => 'required|string|max:255',
@@ -115,10 +116,10 @@ class CoursController extends Controller
         $auth = auth()->user();
         $prof = $auth->prof;
 
-        $cours = Cours::create([
+        $cours = Quiz::create([
             'titre'=>request('titre'),
             'contenu'=>request('contenu'),
-            'type'=>request('type'),
+            'type'=>'Quiz',
             'prof_id'=>$prof->id,
             'module_id'=>request('module_id'),
             'start'=>request('start'),
@@ -127,7 +128,7 @@ class CoursController extends Controller
        
 
        return redirect()
-                ->route('cours_edit', $cours->id)
+                ->route('quiz_edit', $cours->id)
                 ->with('success', __('global.create_succees'));
     }
 
@@ -146,12 +147,13 @@ class CoursController extends Controller
         $auth = auth()->user();
         $prof = $auth->prof;
 
-        $cours = Cours::where([
+        $cours = Quiz::where([
             ['id', $id],
-            ['prof_id', $prof->id]
+            ['prof_id', $prof->id],
+            ['type','Quiz'],
         ])->firstOrFail();
 
-        return $this->view_('cours.update', [
+        return $this->view_('quiz.update', [
             'object'=>$cours
         ]);
     }
@@ -163,7 +165,7 @@ class CoursController extends Controller
     {
         $this->validate(request(), [
             'titre' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
+            //'type' => 'required|string|max:255',
             'module_id' => 'required|string|max:255',
             'start' => 'required|string|max:255',
             'end' => 'required|string|max:255',
@@ -172,14 +174,15 @@ class CoursController extends Controller
         $auth = auth()->user();
         $prof = $auth->prof;
 
-        $cours = Cours::where([
+        $cours = Quiz::where([
             ['id', $id],
-            ['prof_id', $prof->id]
+            ['prof_id', $prof->id],
+            ['type','Quiz'],
         ])->firstOrFail();
 
         $cours->titre = request('titre');
         $cours->contenu = request('contenu');
-        $cours->type = request('type');
+        $cours->type = 'Quiz';
         $cours->prof_id = $prof->id;
         $cours->module_id = request('module_id');
         $cours->start = request('start');
@@ -218,7 +221,7 @@ class CoursController extends Controller
         $cours->save();
 
         return redirect()
-                ->route('cours_edit', $cours->id)
+                ->route('quiz_edit', $cours->id)
                 ->with('success', __('global.edit_succees'));
     }
 
@@ -232,9 +235,10 @@ class CoursController extends Controller
 
         $msg = 'delete_error';
         $flash_type = 'error';
-        $cours = Cours::where([
+        $cours = Quiz::where([
             ['id', $id],
-            ['prof_id', $prof->id]
+            ['prof_id', $prof->id],
+            ['type','Quiz'],
         ])->firstOrFail();
 
         if( $cours->delete() ){            
@@ -243,7 +247,7 @@ class CoursController extends Controller
         }
 
         return redirect()
-            ->route('cours')
+            ->route('quiz')
             ->with($flash_type, __('global.'.$msg));
     }
 
@@ -279,7 +283,7 @@ class CoursController extends Controller
                 ['readed',null],
             ])->count();
             if($ixts)
-                $data .= '<a href="'.route('cours_edit', $cour->id).'?part=descussion" class="dropdown-item d-flex">
+                $data .= '<a href="'.route('quiz_edit', $cour->id).'?part=descussion" class="dropdown-item d-flex">
                     <span class="avatar avatar-md avatar-green mr-3">'.$ixts.'</span>
                     <div>
                         <strong>'.$ixts.' '.__('cours.unread_questions').'</strong> 

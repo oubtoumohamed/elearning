@@ -81,6 +81,14 @@
                     </a>
                   </li>
                   @endif
+                  @if( isGranted('PROF') )
+                  <li class="nav-item mn quiz">
+                    <a href="{{ route('quiz') }}" class="nav-link">
+                      <i class="fa fa-bookmark"></i> 
+                      {{ __('quiz.module_name') }}
+                    </a>
+                  </li>
+                  @endif
                   @if( isGranted('ADMIN') )
                   <!--li class="nav-item mn question">
                     <a href="{{ route('question') }}" class="nav-link">

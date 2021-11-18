@@ -40,3 +40,4 @@ include 'module.php';
 include 'question.php';
 include 'reponse.php';
 include 'cours.php';
+include 'quiz.php';

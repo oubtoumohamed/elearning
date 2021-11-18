@@ -80,7 +80,7 @@ class User extends Authenticatable
         if(
             $this->role == "PROF" 
             && preg_grep ("/^$role(.*)/i", [
-                "PROF","cours"
+                "PROF","cours","quiz"
             ]) 
         )
             return true;

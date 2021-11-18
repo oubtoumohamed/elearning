@@ -212,13 +212,13 @@ var editor = tinymce.init({
 
 @section('content')
 
-  <form class="card" method="POST" enctype="multipart/form-data" action="@if($object->id){{ route('cours_update',$object->id) }}@else{{ route('cours_store') }}@endif">
+  <form class="card" method="POST" enctype="multipart/form-data" action="@if($object->id){{ route('quiz_update',$object->id) }}@else{{ route('quiz_store') }}@endif">
     {{ csrf_field() }}
     <div class="card-body">
       <h3 class="card-title">@if($object->id)
-          {{ __('cours.cours_edit') }}
+          {{ __('quiz.cours_edit') }}
         @else
-          {{ __('cours.cours_create') }}
+          {{ __('quiz.cours_create') }}
         @endif
       </h3>
 
@@ -226,30 +226,30 @@ var editor = tinymce.init({
       <div class="selectgroup course_parts w-100">
         <label class="selectgroup-item">
           <input type="radio" name="desc_value" value="_contenu" {{ Request::get('part') && Request::get('part') != 'contenu' ? '' : 'checked=""' }}  class="selectgroup-input">
-          <span class="selectgroup-button _contenu">{{ __('cours.contenu_part') }}</span>
+          <span class="selectgroup-button _contenu">{{ __('quiz.contenu_part') }}</span>
         </label>
         <!--label class="selectgroup-item">
           <input type="radio" name="desc_value" {{ Request::get('part') == 'descussion' ? 'checked=""' : '' }} value="_descussion" class="selectgroup-input">
-          <span class="selectgroup-button _descussion">{{ __('cours.descussion_part') }}</span>
-        </label>
+          <span class="selectgroup-button _descussion">{{ __('quiz.descussion_part') }}</span>
+        </label-->
         <label class="selectgroup-item">
           <input type="radio" name="desc_value" {{ Request::get('part') == 'quiz' ? 'checked=""' : '' }} value="_quiz" class="selectgroup-input">
-          <span class="selectgroup-button _quiz">{{ __('cours.quiz_part') }}</span>
-        </label-->
+          <span class="selectgroup-button _quiz">{{ __('quiz.quiz_part') }}</span>
+        </label>
       </div>
       @endif
 
       <div class="row div_course_parts course__contenu {{ Request::get('part') && Request::get('part') != 'contenu' ? '' : 'active' }}">
         <div class="col-md-12">
           <div class="form-group">
-            <label class="form-label">{{ __('cours.titre') }}</label>
+            <label class="form-label">{{ __('quiz.titre') }}</label>
             <input class="form-control" id="titre" name="titre" value="@if($object->id){{ $object->titre }}@else{{ old('titre') }}@endif" type="text" required="">
           </div>
       	</div>
 
         <div class="col-md-6">
           <div class="form-group">
-            <label class="form-label">{{ __('cours.module_id') }}</label>
+            <label class="form-label">{{ __('quiz.module_id') }}</label>
 
             <select class="form-control select_with_filter" required="required" id="module_id" name="module_id">
             @foreach(auth()->user()->prof->modules as $module)
@@ -259,33 +259,33 @@ var editor = tinymce.init({
           </div>
         </div>
 
-        <div class="col-md-6">
+        <!--div class="col-md-6">
           <div class="form-group">
-            <label class="form-label">{{ __('cours.type') }}</label>
+            <label class="form-label">{{ __('quiz.type') }}</label>
             <select id="type" name="type" required="required" class="form-control select_with_filter">
-              <option value="Cours" @if($object->id && $object->gettype() == "Cours" ) selected="selected" @endif >{{ __('cours.cours') }}</option>
-              <option value="TP" @if($object->id && $object->gettype() == "TP" ) selected="selected" @endif >{{ __('cours.tp') }}</option>
-              <option value="TD" @if($object->id && $object->gettype() == "TD" ) selected="selected" @endif >{{ __('cours.td') }}</option>
+              <option value="Cours" @if($object->id && $object->gettype() == "Cours" ) selected="selected" @endif >{{ __('quiz.cours') }}</option>
+              <option value="TP" @if($object->id && $object->gettype() == "TP" ) selected="selected" @endif >{{ __('quiz.tp') }}</option>
+              <option value="TD" @if($object->id && $object->gettype() == "TD" ) selected="selected" @endif >{{ __('quiz.td') }}</option>
             </select>
           </div>
-        </div>
+        </div-->
 
         <div class="col-md-6">
           <div class="form-group">
-            <label class="form-label">{{ __('cours.start') }}</label>
+            <label class="form-label">{{ __('quiz.start') }}</label>
             <input class="form-control" id="start" name="start" value="@if($object->id){{ $object->start }}@else{{ old('start') }}@endif" type="text" required="">
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label class="form-label">{{ __('cours.end') }}</label>
+            <label class="form-label">{{ __('quiz.end') }}</label>
             <input class="form-control" id="end" name="end" value="@if($object->id){{ $object->end }}@else{{ old('end') }}@endif" type="text" required="">
           </div>
         </div>
 
         <div class="col-md-12">
           <div class="form-group">
-            <label class="form-label">{{ __('cours.contenu') }}</label>
+            <label class="form-label">{{ __('quiz.contenu') }}</label>
             <textarea class="form-control" rows="15" id="contenu" name="contenu">@if($object->id){{ $object->contenu }}@else{{ old('contenu') }}@endif</textarea>
           </div>
         </div>
@@ -337,7 +337,7 @@ var editor = tinymce.init({
                       <br>
                       <a href="javascript:replay({{ $question->id }})"  class="btn btn-square btn-secondary">
                         <i class="fa fa-reply" aria-hidden="true"></i>&nbsp;
-                        {{ __('cours.question_replay') }}
+                        {{ __('quiz.question_replay') }}
                       </a>
                     </div>
                   </div>
@@ -362,7 +362,7 @@ var editor = tinymce.init({
           </div>
         </div>
         @endif
-      </div>
+      </div-->
 
 
       <div class="row div_course_parts course__quiz {{ Request::get('part') == 'quiz' ? 'active' : '' }}">
@@ -387,18 +387,18 @@ var editor = tinymce.init({
               @endif
             </div>
             <div class="card-footer addQuiz" style="background-color: #f5f7fb;">
-              <b>{{ __('cours.new_quiz_question') }}</b><br/>
+              <b>{{ __('quiz.new_quiz_question') }}</b><br/>
               <div class="input-group">
                 <div class="input-group-append">
-                  <span>{{ __('cours.new_quiz_question_type') }}</span>
+                  <span>{{ __('quiz.new_quiz_question_type') }}</span>
                   <select id="new_QQUE_type">
-                    <option value="true_false">{{ __('cours.true_false') }}</option>
-                    <option value="single">{{ __('cours.single') }}</option>
-                    <option value="multiple">{{ __('cours.multiple') }}</option>
+                    <option value="true_false">{{ __('quiz.true_false') }}</option>
+                    <option value="single">{{ __('quiz.single') }}</option>
+                    <option value="multiple">{{ __('quiz.multiple') }}</option>
                   </select>
                 </div>
                 <div class="input-group-append">
-                  <span>{{ __('cours.new_quiz_question_number_reponses') }}</span>
+                  <span>{{ __('quiz.new_quiz_question_number_reponses') }}</span>
                   <input id="new_QQUE_number" value="2" disabled="disabled" type="number" min="2" max="6">
                 </div>
                 <div class="input-group-append">
@@ -411,7 +411,7 @@ var editor = tinymce.init({
           </div>
         </div>
         @endif
-      </div-->
+      </div>
     </div>
 
     <script type="text/javascript">
@@ -455,7 +455,7 @@ var editor = tinymce.init({
           $question_id = $('#question_id').val();
           $.ajax({
             method: "GET",
-            url: "{{ route('cours_add_question', $object->id) }}",
+            url: "{{ route('quiz_add_question', $object->id) }}",
             data: { 
               message: $message,
               question_id: $question_id
@@ -547,7 +547,7 @@ var editor = tinymce.init({
         console.error( error );
       });*/
       function replay($Qid){
-        $('#question_text').text("{{ __('cours.question_replay') }} : #"+$Qid);
+        $('#question_text').text("{{ __('quiz.question_replay') }} : #"+$Qid);
         $('#question_id').val($Qid);
         $('#message').focus();
       }
